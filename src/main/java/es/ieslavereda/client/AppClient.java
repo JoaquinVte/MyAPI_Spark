@@ -1,12 +1,16 @@
 package es.ieslavereda.client;
 
-import java.io.IOException;
+import es.ieslavereda.server.model.JsonTransformer;
+import es.ieslavereda.server.model.Person;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class Principal {
+public class AppClient {
+
+    static JsonTransformer<Person> jsonTransformer = new JsonTransformer<>();
 
     public static void main(String[] args) {
 
@@ -14,15 +18,15 @@ public class Principal {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:4567/secureHello"))
+                .uri(URI.create("http://localhost:4567/secure"))
                 .GET()
                 .build();
 
         try {
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-        } catch (IOException | InterruptedException e) {
-            // TODO Auto-generated catch block
+            Person p = jsonTransformer.getObject(response.body().toString(), Person.class);
+            System.out.println(p);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

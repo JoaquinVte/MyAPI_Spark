@@ -11,9 +11,6 @@ public class JsonTransformer<T> implements ResponseTransformer {
     public String render(Object model) {
         return gson.toJson(model);
     }
-
-    public T getObject(String json, Class<T> classOf){
-        return gson.fromJson(json,classOf);
-    }
+    public T getObject(String json, Class<T> classOf){ return gson.fromJson(json,classOf); }
 
 }

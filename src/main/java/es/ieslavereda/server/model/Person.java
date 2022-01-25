@@ -1,15 +1,12 @@
 package es.ieslavereda.server.model;
 
-public class Persona {
+public class Person {
     private String dni;
     private String nombre;
     private String apellidos;
     private int edad;
 
-    public Persona() {
-    }
-
-    public Persona(String dni, String nombre, String apellidos, int edad) {
+    public Person(String dni, String nombre, String apellidos, int edad) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -50,7 +47,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" +
+        return "{" +
                 "nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", edad=" + edad +

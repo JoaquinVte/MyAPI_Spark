@@ -2,7 +2,8 @@ package es.ieslavereda.server.model;
 
 public class API {
     public static class Routes {
-        public static final String Persona = "/Persona";
+        public static final String PERSON = "/person";
+        public static final String PERSON_ALL = "/person/all";
     }
     public static class Type {
         public static final String JSON = "application/json";
