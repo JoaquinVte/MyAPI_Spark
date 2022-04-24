@@ -3,7 +3,7 @@ package es.ieslavereda.server.model.entity;
 /**
  * A generic class that holds a result success w/ data or an error exception.
  */
-public abstract class Result<T> {
+public class Result<T> {
 
     // hide the private constructor to limit subclass types (Success, Error)
     private Result() {
@@ -12,11 +12,11 @@ public abstract class Result<T> {
     @Override
     public String toString() {
         if (this instanceof Result.Success) {
-            Result.Success success = (Result.Success) this;
+            Result.Success<T> success = (Result.Success<T>) this;
             return "Success[data=" + success.getData().toString() + "]";
         } else if (this instanceof Result.Error) {
             Result.Error error = (Result.Error) this;
-            return "Error[exception=" + error.getError().toString() + "]";
+            return "Error[exception=" + error.getError() + "]";
         }
         return "";
     }

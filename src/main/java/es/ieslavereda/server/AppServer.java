@@ -18,6 +18,7 @@ public class AppServer {
 
         //secure("certificados/keystore.p12", "12345678", null, null);
         //port(8080);
+
         before((request, response) -> logger.info("Recibiendo peticion desde " + request.ip()));
 
         get(API.Routes.PERSON, API.Type.JSON, PersonaController::getPerson, new JsonTransformer<Person>());

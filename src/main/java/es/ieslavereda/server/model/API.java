@@ -13,5 +13,4 @@ public class API {
         public static final String TEXT_XML = "text/xml";
         public static final String TEXT_HTML = "text/html";
     }
-
 }

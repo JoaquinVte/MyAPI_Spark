@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 
 public class JsonTransformer<T> implements ResponseTransformer {
 
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @Override
     public String render(Object model) {

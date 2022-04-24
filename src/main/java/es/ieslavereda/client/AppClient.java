@@ -21,7 +21,7 @@ public class AppClient {
         getAll();
 
         // Get by dni
-        getByDNI("123");
+        getByDNI();
 
         // Add a new person
         Person p1 = new Person("445", "Invent", "Invent Invent", 99);
@@ -47,16 +47,16 @@ public class AppClient {
                 .build();
 
         try {
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 500) {
 
-                Result.Error result = jsonTransformer.getError(response.body().toString());
+                Result.Error result = jsonTransformer.getError(response.body());
                 System.out.println(result.getError());
 
             } else if (response.statusCode() == 200) {
 
-                Result.Success<Person> result = jsonTransformer.fromJSonToSuccess(response.body().toString(), Person.class);
+                Result.Success<Person> result = jsonTransformer.fromJSonToSuccess(response.body(), Person.class);
                 Person person = result.getData();
                 System.out.println("Actualizdo el usuario:\n" + person);
 
@@ -78,16 +78,16 @@ public class AppClient {
                 .build();
 
         try {
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 500) {
 
-                Result.Error result = jsonTransformer.getError(response.body().toString());
+                Result.Error result = jsonTransformer.getError(response.body());
                 System.out.println("Error al añadir:\n" + result.getError());
 
             } else if (response.statusCode() == 200) {
 
-                Result.Success<Person> result = jsonTransformer.fromJSonToSuccess(response.body().toString(), Person.class);
+                Result.Success<Person> result = jsonTransformer.fromJSonToSuccess(response.body(), Person.class);
                 Person person = result.getData();
                 System.out.println("Añadida la persona:\n" + person);
 
@@ -99,7 +99,9 @@ public class AppClient {
         }
     }
 
-    private static void getByDNI(String dni) {
+    private static void getByDNI() {
+
+        String dni = "123";
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -108,10 +110,9 @@ public class AppClient {
                 .build();
 
         try {
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Gson gson = new Gson();
-            Person p = jsonTransformer.getObject(response.body().toString(), Person.class);
-            System.out.println("El usurio con dni " + dni + " es :\n" + p);
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            Person p = jsonTransformer.getObject(response.body(), Person.class);
+            System.out.println("El usurio con dni " + "123" + " es :\n" + p);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,9 +127,9 @@ public class AppClient {
                 .build();
 
         try {
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             Gson gson = new Gson();
-            Person[] personas = gson.fromJson(response.body().toString(), Person[].class);
+            Person[] personas = gson.fromJson(response.body(), Person[].class);
             //Person[] p = jsonTransformer.getObject(response.body().toString(), Person.class);
             System.out.println("Listado de personas");
             for (Person p : personas)
@@ -147,13 +148,13 @@ public class AppClient {
                 .build();
 
         try {
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if(response.statusCode()==200) {
-                Result.Success<Person> result = jsonTransformer.fromJSonToSuccess(response.body().toString(), Person.class);
+                Result.Success<Person> result = jsonTransformer.fromJSonToSuccess(response.body(), Person.class);
                 System.out.println("Eliminado:\n" + result.getData());
             } else {
-                Result.Error error = jsonTransformer.getError(response.body().toString());
+                Result.Error error = jsonTransformer.getError(response.body());
                 System.out.println("Error al eliminar: " + error.getError());
             }
         } catch (Exception e) {

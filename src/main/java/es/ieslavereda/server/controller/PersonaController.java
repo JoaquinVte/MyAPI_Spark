@@ -1,6 +1,5 @@
 package es.ieslavereda.server.controller;
 
-import com.sun.net.httpserver.Authenticator;
 import es.ieslavereda.server.model.API;
 import es.ieslavereda.server.model.JsonTransformer;
 import es.ieslavereda.server.model.entity.Person;
@@ -12,22 +11,19 @@ import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PersonaController {
     static Logger logger = LoggerFactory.getLogger(PersonaController.class);
 
-    private static IPersonaService service = new ImpPersonaService();;
+    private static final IPersonaService service = new ImpPersonaService();
 
     static JsonTransformer<Person> jsonTransformer = new JsonTransformer<>();
 
 
     public static Result<Person> addPerson(Request req, Response res){
         logger.info("Add person: "+ req.body() );
-        Person p = jsonTransformer.getObject(req.body().toString(), Person.class);
+        Person p = jsonTransformer.getObject(req.body(), Person.class);
         Result<Person> result = service.save(p);
         res.type("application/json");
         res.status((result instanceof Result.Success)?200:500);
@@ -36,7 +32,7 @@ public class PersonaController {
 
     public static Result<Person> updatePerson(Request request, Response res) {
         logger.info("Updating person ");
-        Person p = jsonTransformer.getObject(request.body().toString(), Person.class);
+        Person p = jsonTransformer.getObject(request.body(), Person.class);
         Result<Person> result = service.update(p);
         res.type("application/json");
         res.status((result instanceof Result.Success)?200:500);
