@@ -1,4 +1,4 @@
-package es.ieslavereda.server.model;
+package es.ieslavereda.server.model.entity;
 
 public class Person {
     private String dni;
@@ -48,7 +48,8 @@ public class Person {
     @Override
     public String toString() {
         return "{" +
-                "nombre='" + nombre + '\'' +
+                "dni='" + dni + "\'" +
+                ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", edad=" + edad +
                 '}';

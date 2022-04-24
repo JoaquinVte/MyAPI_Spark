@@ -3,7 +3,8 @@ package es.ieslavereda.server;
 import es.ieslavereda.server.controller.PersonaController;
 import es.ieslavereda.server.model.API;
 import es.ieslavereda.server.model.JsonTransformer;
-import es.ieslavereda.server.model.Person;
+import es.ieslavereda.server.model.entity.Person;
+import es.ieslavereda.server.model.entity.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +20,10 @@ public class AppServer {
         //port(8080);
         before((request, response) -> logger.info("Recibiendo peticion desde " + request.ip()));
 
-        get(API.Routes.PERSON, API.Type.JSON,(request, response) -> PersonaController.getPerson(request,response), new JsonTransformer<Person>());
+        get(API.Routes.PERSON, API.Type.JSON, PersonaController::getPerson, new JsonTransformer<Person>());
         get(API.Routes.PERSON_ALL, API.Type.JSON,(request, response) -> PersonaController.getAllPerson(), new JsonTransformer<Person>());
-        post(API.Routes.PERSON, API.Type.JSON,(request, response) -> PersonaController.addPerson(request,response),new JsonTransformer<Person>());
-
+        post(API.Routes.PERSON, API.Type.JSON, PersonaController::addPerson,new JsonTransformer<Result<Person>>());
+        put(API.Routes.PERSON, API.Type.JSON, PersonaController::updatePerson,new JsonTransformer<Result<Person>>());
+        delete(API.Routes.PERSON, API.Type.JSON, PersonaController::delPerson, new JsonTransformer<Result<Person>>());
     }
 }
