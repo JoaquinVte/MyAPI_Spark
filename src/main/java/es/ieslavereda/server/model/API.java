@@ -1,9 +1,11 @@
 package es.ieslavereda.server.model;
 
+import es.ieslavereda.config.MyConfig;
+
 public class API {
 
     public static class Routes {
-        public static final String SERVER_BASE = "http://localhost:4567";
+        public static final String SERVER_BASE = "http://"+ MyConfig.getInstance().getServerIP()+":"+MyConfig.getInstance().getServerPort();
         public static final String PERSON = "/person";
         public static final String PERSON_ALL = "/person/all";
     }

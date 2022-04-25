@@ -1,15 +1,12 @@
 package es.ieslavereda.server.model.db;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import es.ieslavereda.config.MyConfig;
 
 import javax.sql.DataSource;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 public class MyDataSource {
-
-    private static final String defaultProperties = "db.properties";
 
     public static DataSource getMySQLDataSource() {
 
@@ -21,23 +18,13 @@ public class MyDataSource {
 
         MysqlDataSource mysqlDS = null;
 
-        try (FileInputStream fis = new FileInputStream(defaultProperties)) {
+        // Generamos el DataSource con los datos URL, user y passwd necesarios
 
-            // Cargamos las propiedades
+        mysqlDS = new MysqlDataSource();
 
-            props.load(fis);
-
-            // Generamos el DataSource con los datos URL, user y passwd necesarios
-
-            mysqlDS = new MysqlDataSource();
-
-            mysqlDS.setURL(props.getProperty("MYSQL_DB_URL"));
-            mysqlDS.setUser(props.getProperty("MYSQL_DB_USERNAME"));
-            mysqlDS.setPassword(props.getProperty("MYSQL_DB_PASSWORD"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mysqlDS.setURL(MyConfig.getInstance().getDBUrl());
+        mysqlDS.setUser(MyConfig.getInstance().getDBUser());
+        mysqlDS.setPassword(MyConfig.getInstance().getDBPassword());
 
         return mysqlDS;
 
