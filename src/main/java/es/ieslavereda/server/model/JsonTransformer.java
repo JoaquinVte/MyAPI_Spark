@@ -27,5 +27,4 @@ public class JsonTransformer<T> implements ResponseTransformer {
         return gson.fromJson(json, Result.Error.class);
     }
 
-
 }
