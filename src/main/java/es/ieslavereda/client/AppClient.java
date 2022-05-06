@@ -23,7 +23,7 @@ public class AppClient {
 
     //static JsonTransformer<Person> jsonTransformer = new JsonTransformer<>();
 
-    static ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor());
+    static ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 
     public static void main(String[] args) {
 

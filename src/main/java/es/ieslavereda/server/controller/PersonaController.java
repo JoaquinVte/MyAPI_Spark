@@ -23,7 +23,7 @@ public class PersonaController {
 
     public static Result<Person> addPerson(Request req, Response res){
         logger.info("Add person: "+ req.body() );
-        Person p = jsonTransformer.getObject(req.body(), Person.class);
+        Person p = (Person) jsonTransformer.getObject(req.body(), Person.class);
         Result<Person> result = service.save(p);
         res.type("application/json");
         res.status((result instanceof Result.Success)?200:500);
@@ -32,7 +32,7 @@ public class PersonaController {
 
     public static Result<Person> updatePerson(Request request, Response res) {
         logger.info("Updating person ");
-        Person p = jsonTransformer.getObject(request.body(), Person.class);
+        Person p = (Person) jsonTransformer.getObject(request.body(), Person.class);
         Result<Person> result = service.update(p);
         res.type("application/json");
         res.status((result instanceof Result.Success)?200:500);

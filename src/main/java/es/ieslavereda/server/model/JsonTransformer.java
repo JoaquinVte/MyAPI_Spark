@@ -16,7 +16,7 @@ public class JsonTransformer<T> implements ResponseTransformer {
         return gson.toJson(model);
     }
 
-    public T getObject(String json, Class<T> classOf){ return gson.fromJson(json,classOf); }
+    public Object getObject(String json, Class<T> classOf){ return gson.fromJson(json,classOf); }
 
     public Result.Success<T> fromJSonToSuccess(String json, Class<T> myType) {
         Type dinamicType = TypeToken.getParameterized(Result.Success.class, myType).getType();

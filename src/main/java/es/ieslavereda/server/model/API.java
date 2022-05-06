@@ -8,6 +8,9 @@ public class API {
         public static final String SERVER_BASE = "http://"+ MyConfig.getInstance().getServerIP()+":"+MyConfig.getInstance().getServerPort();
         public static final String PERSON = "/person";
         public static final String PERSON_ALL = "/person/all";
+
+        public static final String ORACLE_URL_BASE = "http://localhost:4567";
+        public static final String ORACLE_AUTH = "/authenticate";
     }
 
     public static class Type {
